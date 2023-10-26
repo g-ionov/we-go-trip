@@ -6,7 +6,8 @@ class Product(models.Model):
     Модель товара.
     """
     title = models.CharField(max_length=255, verbose_name='Название')
-    image = models.ImageField(verbose_name='Изображение', upload_to='images/%Y/%m/')
+    image = models.ImageField(verbose_name='Изображение', upload_to='images/%Y/%m/',
+                              null=True, blank=True)
     content = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
