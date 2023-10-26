@@ -1,6 +1,7 @@
 from rest_framework import generics
 
-from shop.serializers import ProductListSerializer
+from shop.models import Product
+from shop.serializers import ProductListSerializer, OrderCreateSerializer
 from shop.services import get_products
 
 
@@ -12,3 +13,12 @@ class ProductAPIView(generics.ListAPIView):
     """
     queryset = get_products()
     serializer_class = ProductListSerializer
+
+
+class OrderAPIView(generics.CreateAPIView):
+    """
+    Создание заказа.
+
+    POST запрос для создания заказа.
+    """
+    serializer_class = OrderCreateSerializer

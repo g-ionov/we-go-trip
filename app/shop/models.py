@@ -1,5 +1,8 @@
 from django.db import models
 
+from shop import services, signals
+from shop.signals import handle_product_in_order_change
+
 
 class Product(models.Model):
     """
@@ -35,10 +38,18 @@ class Order(models.Model):
     date_confirmed = models.DateTimeField(blank=True, null=True, verbose_name='Дата подтверждения')
     status = models.ForeignKey(Status, on_delete=models.PROTECT, verbose_name='Статус')
     total_price = models.DecimalField(max_digits=10, decimal_places=2,
-                                      verbose_name='Итоговая сумма')
+                                      verbose_name='Итоговая сумма', default=0)
 
     def __str__(self):
         return f'Заказ №{self.pk}: {self.date_created}'
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.status = services.get_initial_status_for_order()
+        super().save(*args, **kwargs)
+
+
+models.signals.m2m_changed.connect(handle_product_in_order_change, sender=Order.product.through)
 
 
 class Payment(models.Model):
