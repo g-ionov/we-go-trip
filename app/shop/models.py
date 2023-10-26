@@ -45,7 +45,7 @@ class Order(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.pk:
-            self.status = services.get_initial_status_for_order()
+            self.status = services.get_initial_status('order')
         super().save(*args, **kwargs)
 
 
@@ -67,3 +67,8 @@ class Payment(models.Model):
                                     default='card', verbose_name='Тип оплаты')
     order = models.ForeignKey(Order, on_delete=models.CASCADE,
                               verbose_name='Заказ', related_name='payment')
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.status = services.get_initial_status('payment')
+        super().save(*args, **kwargs)

@@ -1,7 +1,7 @@
 from rest_framework import generics
 
 from shop.models import Product
-from shop.serializers import ProductListSerializer, OrderCreateSerializer
+from shop.serializers import ProductListSerializer, OrderCreateSerializer, PaymentCreateSerializer
 from shop.services import get_products
 
 
@@ -22,3 +22,16 @@ class OrderAPIView(generics.CreateAPIView):
     POST запрос для создания заказа.
     """
     serializer_class = OrderCreateSerializer
+
+
+class PaymentAPIView(generics.CreateAPIView):
+    """
+    Оплата.
+
+    POST запрос для оплаты.
+    """
+    serializer_class = PaymentCreateSerializer
+
+    def perform_create(self, serializer):
+        serializer.validated_data['price'] = serializer.validated_data['order'].total_price
+        serializer.save()
