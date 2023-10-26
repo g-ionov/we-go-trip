@@ -61,7 +61,7 @@ class Payment(models.Model):
         ('card', 'Банковской картой')
     ]
 
-    payment_status = models.ForeignKey(Status, on_delete=models.PROTECT, verbose_name='Статус')
+    status = models.ForeignKey(Status, on_delete=models.PROTECT, verbose_name='Статус')
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Сумма')
     payment_type = models.CharField(max_length=20, choices=PAYMENT_TYPE_CHOICES,
                                     default='card', verbose_name='Тип оплаты')
