@@ -30,5 +30,5 @@ class OrderAdmin(admin.ModelAdmin):
 
 @admin.register(Payment)
 class PaymentInline(admin.ModelAdmin):
-    list_display = ('order', 'price', 'payment_status', 'payment_type')
-    readonly_fields = ('price', 'payment_status', 'payment_type')
+    list_display = ('order', 'price', 'status', 'payment_type')
+    readonly_fields = ('price', 'status', 'payment_type')
