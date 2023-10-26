@@ -24,7 +24,7 @@
     }
   },
   {
-    "model": "helpdesk.category",
+    "model": "shop.status",
     "pk": 4,
     "fields": {
       "title": "Не оплачен",
