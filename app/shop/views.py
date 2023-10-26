@@ -1,8 +1,11 @@
-from rest_framework import generics
+from rest_framework import generics, status
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework.viewsets import GenericViewSet, mixins
 
-from shop.models import Product
+from shop import services
 from shop.serializers import ProductListSerializer, OrderCreateSerializer, PaymentCreateSerializer
-from shop.services import get_products
+from shop.services import get_products, check_confirm_order_ability
 
 
 class ProductAPIView(generics.ListAPIView):
@@ -15,13 +18,34 @@ class ProductAPIView(generics.ListAPIView):
     serializer_class = ProductListSerializer
 
 
-class OrderAPIView(generics.CreateAPIView):
+class OrderViewSet(mixins.CreateModelMixin, GenericViewSet):
     """
     Создание заказа.
 
-    POST запрос для создания заказа.
+    Эндпоинт для работы с заказом (создание и подтверждение).
     """
-    serializer_class = OrderCreateSerializer
+    queryset = services.get_orders()
+
+    def get_serializer_class(self):
+        if self.action == 'create':
+            return OrderCreateSerializer
+
+    @action(methods=['post'], detail=True, url_path='confirm')
+    def confirm_order(self, request, pk=None):
+        """
+        Подтверждение заказа.
+
+        Подтверждение заказа с отправкой запроса на внешний API.
+        """
+        obj = self.get_object()
+        if not check_confirm_order_ability(obj):
+            return Response({'error': 'Заказ не может быть подтвержден'},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        confirm_response = services.confirm_order(obj)
+        if confirm_response.status_code != 200:
+            return confirm_response
+        return Response({'success': 'Заказ подтвержден'}, status=status.HTTP_200_OK)
 
 
 class PaymentAPIView(generics.CreateAPIView):
