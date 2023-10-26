@@ -170,7 +170,7 @@ __pycache__/
 .pyc
 *.pyc
 
-media/*
+media/**
 !*media
 
 .idea
