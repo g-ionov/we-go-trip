@@ -1,0 +1,34 @@
+[
+  {
+    "model": "shop.status",
+    "pk": 1,
+    "fields": {
+      "title": "Новый",
+      "code": "new"
+    }
+  },
+  {
+    "model": "shop.status",
+    "pk": 2,
+    "fields": {
+      "title": "Подтвержден",
+      "code": "confirmed"
+    }
+  },
+    {
+    "model": "shop.status",
+    "pk": 3,
+    "fields": {
+      "title": "Оплачен",
+      "code": "paid"
+    }
+  },
+  {
+    "model": "helpdesk.category",
+    "pk": 4,
+    "fields": {
+      "title": "Не оплачен",
+      "code": "not_paid"
+    }
+  }
+]
