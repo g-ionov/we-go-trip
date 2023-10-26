@@ -24,7 +24,8 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = readonly_fields = (  'total_price', 'status', 'date_created', 'date_confirmed')
+    list_display = readonly_fields = (
+        'id', 'total_price', 'status', 'date_created', 'date_confirmed')
 
 
 @admin.register(Payment)
