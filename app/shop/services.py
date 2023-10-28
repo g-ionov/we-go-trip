@@ -36,7 +36,7 @@ def calculate_order_total_price(order: 'models.Order') -> None:
 
 def check_confirm_order_ability(order: 'models.Order') -> bool:
     """Проверка возможности подтверждения заказа."""
-    return order.payment.get().status.code == 'paid'
+    return order.payment.status.code == 'paid'
 
 
 def get_orders() -> QuerySet:
