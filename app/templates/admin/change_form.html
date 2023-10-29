@@ -1,0 +1,15 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block object-tools-items %}
+{% if confirm_button_check %}
+    <iframe name="plug-frame" id="plug-frame" style="display: none;"></iframe>
+    <form action="{{confirm_url}}" method="post" target="plug-frame" onsubmit="return confirm('Подтвердить заказ? (Статус обновится после перезагрузки страницы)');">
+        {% csrf_token %}
+        <div class="submit-button">
+            <input type="submit" value="Подтвердить заказ"/>
+        </div>
+    </form>
+{% endif %}
+{{ block.super }}
+{% endblock %}

@@ -43,8 +43,8 @@ class OrderViewSet(mixins.CreateModelMixin, GenericViewSet):
                             status=status.HTTP_400_BAD_REQUEST)
 
         confirm_response = services.confirm_order(obj)
-        if confirm_response.status_code != 200:
-            return confirm_response
+        # if confirm_response.status_code != 200:
+        #     return confirm_response
         return Response({'success': 'Заказ подтвержден'}, status=status.HTTP_200_OK)
 
 

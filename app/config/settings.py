@@ -45,7 +45,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -122,16 +122,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Настройка логирования.
 # Используется для просмотра исходящих запросов в БД при тестировании через Postman/Swagger.
-if DEBUG:
-    LOGGING = {
-        'version': 1,
-        'handlers': {
-            'console': {'class': 'logging.StreamHandler'}
-        },
-        'loggers': {
-            'django.db.backends': {
-                'handlers': ['console'],
-                'level': 'DEBUG',
-            }
-        }
-    }
+# if DEBUG:
+#     LOGGING = {
+#         'version': 1,
+#         'handlers': {
+#             'console': {'class': 'logging.StreamHandler'}
+#         },
+#         'loggers': {
+#             'django.db.backends': {
+#                 'handlers': ['console'],
+#                 'level': 'DEBUG',
+#             }
+#         }
+#     }
